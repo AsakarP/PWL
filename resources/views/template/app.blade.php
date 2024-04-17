@@ -25,9 +25,14 @@
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
                         <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0">
+                            <a href="{{ route('dashboard') }}" class="nav-link align-middle px-0">
                                 <i class="fas fa-home"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile') }}" class="nav-link px-0 align-middle">
+                                <i class="fas fa-clipboard-list"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Profile</span></a>
                         </li>
                         <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
@@ -44,11 +49,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <i class="fas fa-clipboard-list"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Orders</span></a>
-                        </li>
+
                         <li>
                             <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
                                 <i class="fab fa-bootstrap"></i> <span
@@ -99,8 +100,11 @@
                             class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
-                                class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">loser</span>
+                                class="rounded-circle img-fluid">
+                            <div class="d-flex flex-column ms-2">
+                                <span class="d-inline-block">{{ $nama }}</span>
+                                <span class="badge bg-primary">{{ $role }}</span>
+                            </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                             <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -109,14 +113,28 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col py-3">
-                <!-- Content -->
-                @yield('content')
+                <div class="container-fluid mt-3">
+                    <div>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    Pages
+                                </li>
+                                <li class="breadcrumb-item">
+                                    {{ str_replace('-', ' ', Request::path()) }}
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <!-- Content -->
+                    @yield('content')
+                </div>
             </div>
         </div>
     </div>

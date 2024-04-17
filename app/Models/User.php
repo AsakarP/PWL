@@ -31,11 +31,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $with = ['role'];
+    protected $with = ['role', 'kurikulum'];
 
     public function role()
     {
         return $this->belongsTo(Role::class, 'guid_role', 'guid');
+    }
+    public function kurikulum()
+    {
+        return $this->belongsTo(Kurikulum::class, 'guid_kurikulum', 'guid');
     }
     public function polling_detail()
     {

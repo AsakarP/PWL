@@ -17,13 +17,15 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $session = new Session();
-            $session->set('name', Auth::user()->name);
+            $session->set('nama', Auth::user()->name);
             $session->set('nrp', Auth::user()->nrp);
+            $session->set('email', Auth::user()->email);
             $session->set('role', Auth::user()->role->nama);
-            $nrp = $session->get('nrp');
-            $nama = $session->get('nama');
-            $role = $session->get('role');
-            return view('dashboard', compact('nrp', 'nama', 'role'));
+            if (isset(Auth::user()->kurikulum)) {
+                $session->set('kurikulum', Auth::user()->kurikulum->tahun_akademik);
+            }
+
+            return redirect()->route('dashboard');
         } else {
             return back()->withErrors(['login' => 'Email atau password salah.'])->withInput();
         }
@@ -34,6 +36,6 @@ class AuthController extends Controller
         Auth::logout();
         $session = new Session();
         $session->clear();
-        return redirect()->route('login');
+        return redirect('/');
     }
 }

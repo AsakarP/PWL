@@ -3,9 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
+    public function profile()
+    {
+        $session = new Session();
+        $nrp = $session->get('nrp');
+        $nama = $session->get('nama');
+        $email = $session->get('email');
+        $role = $session->get('role');
+        if ($session->get('kurikulum')) {
+            $kurikulum = $session->get('kurikulum');
+        } else {
+            $kurikulum = false;
+        }
+        return view('profile.index', compact('nrp', 'nama', 'email', 'role', 'kurikulum'));
+    }
     /**
      * Display a listing of the resource.
      */
