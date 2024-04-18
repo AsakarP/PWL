@@ -28,6 +28,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('profile/edit-photo/{user:nrp}', [UserController::class, 'updatephoto'])->name('update-profile-photo');
+    Route::get('profile/delete-photo/{user:nrp}', [UserController::class, 'deletePhoto'])->name('delete-profile-photo');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
 Route::post('login', [AuthController::class, 'login'])->name('login');

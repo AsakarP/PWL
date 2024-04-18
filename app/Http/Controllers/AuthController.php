@@ -20,6 +20,10 @@ class AuthController extends Controller
             $session->set('nama', Auth::user()->name);
             $session->set('nrp', Auth::user()->nrp);
             $session->set('email', Auth::user()->email);
+            if (isset(Auth::user()->profile_img)) {
+                $session->set('profile_img', Auth::user()->profile_img);
+            }
+            $session->set('profile_img', Auth::user()->profile_img);
             $session->set('role', Auth::user()->role->nama);
             if (isset(Auth::user()->kurikulum)) {
                 $session->set('kurikulum', Auth::user()->kurikulum->tahun_akademik);
