@@ -20,7 +20,7 @@ class User extends Authenticatable
         'password',
         'email',
         'guid_role',
-        'guid_kurikulum',
+        'tahun_masuk',
     ];
 
     protected $hidden = [
@@ -31,15 +31,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $with = ['role', 'kurikulum'];
+    protected $with = ['role'];
 
     public function role()
     {
         return $this->belongsTo(Role::class, 'guid_role', 'guid');
-    }
-    public function kurikulum()
-    {
-        return $this->belongsTo(Kurikulum::class, 'guid_kurikulum', 'guid');
     }
     public function polling_details()
     {

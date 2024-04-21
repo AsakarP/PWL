@@ -28,7 +28,7 @@
                                 <th class="text-center">Nama</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Role</th>
-                                <th class="text-center">Kurikulum</th>
+                                <th class="text-center">Tahun Masuk</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -67,14 +67,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3" id="add-kurikulum-div" style="display: none;">
-                                <label for="add-guid-kurikulum" class="form-label">Kurikulum</label>
-                                <select class="form-select" id="add-guid-kurikulum" name="add_guid_kurikulum">
-                                    <option value="">Select Kurikulum</option>
-                                    @foreach ($kurikulums as $kurikulum)
-                                        <option value="{{ $kurikulum->guid }}">{{ $kurikulum->tahun_akademik }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mb-3">
+                                <label for="add-tahun-masuk" class="form-label">Tahun Masuk:</label>
+                                <input type="number" class="form-control" id="add-tahun-masuk" name="add_tahun_masuk"
+                                    min="1900" max="2099" step="1" placeholder="YYYY" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -141,13 +137,11 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="mb-3" id="update-kurikulum-div" style="display: none;">
-                                <label for="update-guid-kurikulum" class="form-label">Kurikulum</label>
-                                <select class="form-select" id="update-guid-kurikulum" name="update_guid_kurikulum">
-                                    @foreach ($kurikulums as $kurikulum)
-                                        <option value="{{ $kurikulum->guid }}">{{ $kurikulum->tahun_akademik }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="mb-3">
+                                <label for="update-tahun-masuk" class="form-label">Tahun Masuk:</label>
+                                <input type="number" class="form-control" id="update-tahun-masuk"
+                                    name="update_tahun_masuk" min="1900" max="2099" step="1"
+                                    placeholder="YYYY" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -210,15 +204,8 @@
                         }
                     },
                     {
-                        data: 'kurikulum',
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            if (data) {
-                                return data['tahun_akademik'];
-                            } else {
-                                return "-";
-                            }
-                        }
+                        data: 'tahun_masuk',
+                        className: 'text-center'
                     },
                     {
                         data: null,
@@ -260,7 +247,7 @@
                 displayLength: 10,
                 lengthMenu: [7, 10, 25, 50],
                 buttons: [{
-                    text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Kurikulum</span>',
+                    text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add User</span>',
                     className: "create-new btn btn-primary",
                     action: function(e, dt, node, config) {
                         $('#modalAdd').modal('show');
@@ -284,7 +271,7 @@
                         }
                     }
                 },
-            }), $("div.head-label").html('<h5 class="card-title mb-0">Data Kurikulum</h5>');
+            }), $("div.head-label").html('<h5 class="card-title mb-0">Data User</h5>');
 
         });
 
@@ -293,28 +280,19 @@
             var nrp = row.find("td:eq(1)").text().trim();
             var nama = row.find("td:eq(2)").text().trim();
             var email = row.find("td:eq(3)").text().trim();
-            var role_nama = row.find("td:eq(4)").text().trim();
-            var tahun_akademik = row.find("td:eq(5)").text().trim();
+            var roleNama = row.find("td:eq(4)").text().trim();
+            var tahunMasuk = row.find("td:eq(5)").text().trim();
             $('#update-nrp').val(nrp);
             $('#update-nama').val(nama);
             $('#update-email').val(email);
+            $('#update-tahun-masuk').val(tahunMasuk);
             var roles = {!! json_encode($roles) !!};
             roles.forEach(function(role) {
-                if (role.nama === role_nama) {
+                if (role.nama === roleNama) {
                     $('#update-guid-role').val(role.guid);
                 }
             });
-            var kurikulums = {!! json_encode($kurikulums) !!};
-            kurikulums.forEach(function(kurikulum) {
-                if (kurikulum.nama === tahun_akademik) {
-                    $('#update-guid-kurikulum').val(kurikulum.guid);
-                }
-            });
             $('#modalUpdate').modal('show');
-            if (role_nama === 'mahasiswa') {
-                $('#update-kurikulum-div').show();
-            }
-
             $('#update-form').attr('action', "/user/" + nrp);
         });
 
@@ -322,44 +300,6 @@
             var nrp = $(this).data('nrp');
             $('#modalDelete').modal('show');
             $('#delete-form').attr('action', "/user/" + nrp);
-        });
-
-        $('#add-guid-role').change(function() {
-            var selectedRole = $(this).val();
-            var kurikulumDiv = $('#add-kurikulum-div');
-            var kurikulumSelect = $('#add-guid-kurikulum');
-            var roles = {!! json_encode($roles) !!};
-
-            roles.forEach(function(role) {
-                if (role.guid === selectedRole) {
-                    if (role.nama === 'program studi') {
-                        kurikulumSelect.val('');
-                        kurikulumDiv.hide();
-                    } else {
-                        kurikulumDiv.show();
-                    }
-                }
-            });
-        });
-
-        $('#update-guid-role').change(function() {
-            var selectedRole = $(this).val();
-            var kurikulumDiv = $('#update-kurikulum-div');
-            var kurikulumSelect = $('#update-guid-kurikulum');
-            var roles = {!! json_encode($roles) !!};
-
-            roles.forEach(function(role) {
-                if (role.guid === selectedRole) {
-                    if (role.nama === 'program studi') {
-                        kurikulumSelect.val('');
-                        kurikulumDiv.hide();
-                    } else {
-                        kurikulumDiv.show();
-                    }
-                }
-            });
-
-
         });
     </script>
 @endsection

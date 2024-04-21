@@ -15,7 +15,7 @@ class PollingDetail extends Model
 
 
     protected $fillable = [
-        'nrp_user', 'kode_mata_kuliah', 'guid_polling', 'nrp_user '
+        'nrp_user', 'kode_mata_kuliah', 'guid_polling'
     ];
 
     protected $hidden = [
@@ -27,4 +27,16 @@ class PollingDetail extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    public function mata_kuliah()
+    {
+        return $this->belongsTo(MataKuliah::class, 'kode_mata_kuliah', 'kode');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nrp_user', 'nrp');
+    }
+    public function polling()
+    {
+        return $this->belongsTo(MataKuliah::class, 'guid_polling', 'guid');
+    }
 }

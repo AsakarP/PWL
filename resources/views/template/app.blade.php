@@ -17,7 +17,7 @@
     <!-- Konten sidebar -->
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark sidebar">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="/"
                         class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -35,75 +35,43 @@
                                 <i class="fas fa-clipboard-list"></i> <span
                                     class="ms-1 d-none d-sm-inline">Profile</span></a>
                         </li>
+                        @if (Auth::user()->role->nama === 'program studi')
+                            <li>
+                                <a href="{{ route('kurikulum') }}" class="nav-link px-0 align-middle">
+                                    <i class="fas fa-clipboard-list"></i> <span
+                                        class="ms-1 d-none d-sm-inline">Kurikulum</span></a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user') }}" class="nav-link px-0 align-middle">
+                                    <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
+                                </a>
+                            </li>
+                        @endif
                         <li>
-                            <a href="{{ route('kurikulum') }}" class="nav-link px-0 align-middle">
-                                <i class="fas fa-clipboard-list"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Kurikulum</span></a>
-                        </li>
-                        <li>
-                            <a href="{{ route('profile') }}" class="nav-link px-0 align-middle">
-                                <i class="fas fa-clipboard-list"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Polling</span></a>
-                        </li>
-                        <li>
-                            <a href="{{ route('user') }}" class="nav-link px-0 align-middle">
-                                <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
+                            <a href="{{ route('polling') }}" class="nav-link px-0 align-middle">
+                                <i class="fas fa-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Polling</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fas fa-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                                <i class="fas fa-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Polling</span>
                             </a>
                             <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                                 <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 1 </a>
+                                    <a href="{{ route('polling') }}" class="nav-link px-0"> <span
+                                            class="d-none d-sm-inline">Index</span></a>
+                                </li>
+                                <li class="w-100">
+                                    <a href="{{ route('mata-kuliah-polling') }}" class="nav-link px-0"> <span
+                                            class="d-none d-sm-inline">Index</span></a>
                                 </li>
                                 <li>
                                     <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 2 </a>
+                                            class="d-none d-sm-inline">Result</span></a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li>
-                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <i class="fab fa-bootstrap"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 1</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fas fa-box"></i> <span class="ms-1 d-none d-sm-inline">Products</span>
-                            </a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Product</span> 1</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Product</span> 2</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Product</span> 3</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Product</span> 4</a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
@@ -159,6 +127,7 @@
             </div>
         </div>
     </div>
+    @yield('footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>

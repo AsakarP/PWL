@@ -74,7 +74,7 @@ class UserController extends Controller
                     'add_nama' => 'required|string',
                     'add_email' => 'required|email',
                     'add_guid_role' => 'required|string',
-                    'add_guid_kurikulum' => 'nullable|string',
+                    'add_tahun_masuk' => 'required|integer',
                 ]
             )->validated();
 
@@ -84,9 +84,7 @@ class UserController extends Controller
             $user->email = $validatedData['add_email'];
             $user->guid_role = $validatedData['add_guid_role'];
             $user->password = Hash::make('asd123');
-            if (isset($request['add_guid_kurikulum'])) {
-                $user->guid_kurikulum = $validatedData['add_guid_kurikulum'];
-            }
+            $user->tahun_masuk = $validatedData['add_tahun_masuk'];
             $user->save();
             return redirect(route('user'));
         } catch (Exception $ex) {
@@ -123,7 +121,7 @@ class UserController extends Controller
                     'update_nama' => 'required|string',
                     'update_email' => 'required|email',
                     'update_guid_role' => 'required|string',
-                    'update_guid_kurikulum' => 'nullable|string',
+                    'update_tahun_masuk' => 'required|integer',
                 ]
             )->validated();
 
@@ -131,11 +129,7 @@ class UserController extends Controller
             $user->name = $validatedData['update_nama'];
             $user->email = $validatedData['update_email'];
             $user->guid_role = $validatedData['update_guid_role'];
-            if (isset($request['update_guid_kurikulum'])) {
-                $user->guid_kurikulum = $validatedData['update_guid_kurikulum'];
-            } else {
-                $user->guid_kurikulum = null;
-            }
+            $user->tahun_masuk = $validatedData['update_tahun_masuk'];
             $user->save();
             return redirect(route('user'));
         } catch (Exception $ex) {

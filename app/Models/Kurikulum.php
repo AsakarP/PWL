@@ -15,7 +15,7 @@ class Kurikulum extends Model
 
 
     protected $fillable = [
-        'tahun_akademik'
+        'tahun_akademik', 'status'
     ];
 
     protected $hidden = [
@@ -30,9 +30,5 @@ class Kurikulum extends Model
     public function mata_kuliahs()
     {
         return $this->hasMany(MataKuliah::class, 'guid_kurikulum', 'guid');
-    }
-    public function users()
-    {
-        return $this->hasMany(User::class, 'guid_kurikulum', 'guid');
     }
 }

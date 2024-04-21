@@ -55,17 +55,15 @@
                                                     class="badge bg-primary">{{ Auth::user()->role->nama }}</span></p>
                                         </div>
                                     </div>
-                                    @if (isset(Auth::user()->kurikulum))
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Kurikulum</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">{{ Auth::user()->kurikulum }}</p>
-                                            </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p class="mb-0">Tahun Masuk</p>
                                         </div>
-                                    @endif
+                                        <div class="col-sm-9">
+                                            <p class="text-muted mb-0">{{ Auth::user()->tahun_masuk }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

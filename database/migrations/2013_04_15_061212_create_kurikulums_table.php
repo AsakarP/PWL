@@ -15,7 +15,8 @@ class CreateKurikulumsTable extends Migration
     {
         Schema::create('kurikulums', function (Blueprint $table) {
             $table->uuid('guid')->primary();
-            $table->integer('tahun_akademik');
+            $table->string('tahun_akademik');
+            $table->enum('status', ['active', 'not active'])->default('not active');
             $table->timestamps();
         });
     }

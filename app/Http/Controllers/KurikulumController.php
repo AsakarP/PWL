@@ -14,7 +14,7 @@ class KurikulumController extends Controller
      */
     public function index()
     {
-        $kurikulum = Kurikulum::withCount('users', 'mata_kuliahs')->get();
+        $kurikulum = Kurikulum::withCount('mata_kuliahs')->get();
         $dataTable = DataTables::of($kurikulum)
             ->addIndexColumn()
             ->make(true);
@@ -38,12 +38,22 @@ class KurikulumController extends Controller
             $validatedData = validator(
                 $request->all(),
                 [
-                    'add_tahun_akademik' => 'required|integer',
+                    'add_tahun_akademik' => 'required|string',
+                    'add_status' => 'required|string',
                 ]
             )->validated();
 
+            if ($validatedData['add_status'] === 'active') {
+                $activeKurikulum = Kurikulum::where('status', 'active')->first();
+                if ($activeKurikulum) {
+                    $activeKurikulum->status = 'not active';
+                    $activeKurikulum->save();
+                }
+            }
+
             $kurikulum = new Kurikulum();
             $kurikulum->tahun_akademik = $validatedData['add_tahun_akademik'];
+            $kurikulum->status = $validatedData['add_status'];
             $kurikulum->save();
             return redirect(route('kurikulum'));
         } catch (Exception $ex) {
@@ -76,11 +86,21 @@ class KurikulumController extends Controller
             $validatedData = validator(
                 $request->all(),
                 [
-                    'update_tahun_akademik' => 'required|integer',
+                    'update_tahun_akademik' => 'required|string',
+                    'update_status' => 'required|string',
                 ]
             )->validated();
 
+            if ($validatedData['update_status'] === 'active') {
+                $activeKurikulum = Kurikulum::where('status', 'active')->where('guid', '!=', $kurikulum->guid)->first();
+                if ($activeKurikulum) {
+                    $activeKurikulum->status = 'not active';
+                    $activeKurikulum->save();
+                }
+            }
+
             $kurikulum->tahun_akademik = $validatedData['update_tahun_akademik'];
+            $kurikulum->status = $validatedData['update_status'];
             $kurikulum->save();
             return redirect(route('kurikulum'));
         } catch (Exception $ex) {

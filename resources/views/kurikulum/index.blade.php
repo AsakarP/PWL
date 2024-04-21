@@ -26,7 +26,7 @@
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tahun Akademik</th>
                                 <th class="text-center">Jumlah Mata Kuliah</th>
-                                <th class="text-center">Jumlah Mahasiswa</th>
+                                <th class="text-center">Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -47,10 +47,16 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="add-tahun-akademik" class="form-label">Tahun Akademik:</label>
-                                <input type="number" class="form-control" id="add-tahun-akademik" name="add_tahun_akademik"
-                                    min="1900" max="2099" step="1" placeholder="YYYY" required>
+                                <input type="text" class="form-control" id="add-tahun-akademik" name="add_tahun_akademik"
+                                    required>
                             </div>
-
+                            <div class="mb-3">
+                                <label for="add-status" class="form-label">Status</label>
+                                <select class="form-select" id="add-status" name="add_status" required>
+                                    <option value="active">Active</option>
+                                    <option value="not active">Not Active</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -97,9 +103,16 @@
 
                             <div class="mb-3">
                                 <label for="update-tahun-akademik" class="form-label">Tahun Akademik:</label>
-                                <input type="number" class="form-control" id="update-tahun-akademik"
-                                    name="update_tahun_akademik" min="1900" max="2099" step="1"
-                                    placeholder="YYYY" required>
+                                <input type="text" class="form-control" id="update-tahun-akademik"
+                                    name="update_tahun_akademik" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="update-status" class="form-label">Status</label>
+                                <select class="form-select" id="update-status" name="update_status" required>
+                                    <option value="active">Active</option>
+                                    <option value="not active">Not Active</option>
+                                </select>
                             </div>
 
                         </div>
@@ -152,7 +165,7 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'users_count',
+                        data: 'status',
                         className: 'text-center'
                     },
                     {
@@ -228,7 +241,9 @@
         $(document).on("click", ".edit-btn", function() {
             var row = $(this).closest("tr");
             var tahunAkademik = row.find("td:eq(1)").text().trim();
+            var status = row.find("td:eq(2)").text().trim();
             $('#update-tahun-akademik').val(tahunAkademik);
+            $('#update-status').val(status);
             var guid = $(this).data('guid');
             $('#modalUpdate').modal('show');
             $('#update-form').attr('action', "/kurikulum/" + guid);

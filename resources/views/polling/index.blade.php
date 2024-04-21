@@ -24,11 +24,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Nrp</th>
-                                <th class="text-center">Nama</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Role</th>
-                                <th class="text-center">Kurikulum</th>
+                                <th class="text-center">Waktu Mulai</th>
+                                <th class="text-center">Waktu Selesai</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -44,37 +41,18 @@
                         <h5 class="modal-title" id="modalAddLabel">Add New Data</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="add-form" action="{{ route('user-store') }}" method="post">
+                    <form id="add-form" action="{{ route('polling-store') }}" method="post">
                         @csrf
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="add-nrp" class="form-label">NRP</label>
-                                <input type="text" class="form-control" id="add-nrp" name="add_nrp" required>
+                                <label for="add-waktu-mulai" class="form-label">Waktu Mulai</label>
+                                <input type="datetime-local" class="form-control" id="add-waktu-mulai"
+                                    name="add_waktu_mulai" required>
                             </div>
                             <div class="mb-3">
-                                <label for="add-nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="add-nama" name="add_nama" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="add-email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="add-email" name="add_email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="add-role" class="form-label">Role</label>
-                                <select class="form-select" id="add-guid-role" name="add_guid_role" required>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->guid }}">{{ $role->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3" id="add-kurikulum-div" style="display: none;">
-                                <label for="add-guid-kurikulum" class="form-label">Kurikulum</label>
-                                <select class="form-select" id="add-guid-kurikulum" name="add_guid_kurikulum">
-                                    <option value="">Select Kurikulum</option>
-                                    @foreach ($kurikulums as $kurikulum)
-                                        <option value="{{ $kurikulum->guid }}">{{ $kurikulum->tahun_akademik }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="add-waktu-selesai" class="form-label">Waktu Selesai</label>
+                                <input type="datetime-local" class="form-control" id="add-waktu-selesai"
+                                    name="add_waktu_selesai" required>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -119,35 +97,15 @@
                     <form id="update-form" method="post">
                         @csrf
                         <div class="modal-body">
-
                             <div class="mb-3">
-                                <label for="update-nrp" class="form-label">NRP</label>
-                                <input type="text" class="form-control" id="update-nrp" name="update_nrp" required>
+                                <label for="update-waktu-mulai" class="form-label">Waktu Mulai</label>
+                                <input type="datetime-local" class="form-control" id="update-waktu-mulai"
+                                    name="update_waktu_mulai" required>
                             </div>
                             <div class="mb-3">
-                                <label for="update-nama" class="form-label">Nama</label>
-                                <input type="text" class="form-control" id="update-nama" name="update_nama" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="update-email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="update-email" name="update_email"
-                                    required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="update-role" class="form-label">Role</label>
-                                <select class="form-select" id="update-guid-role" name="update_guid_role" required>
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->guid }}">{{ $role->nama }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3" id="update-kurikulum-div" style="display: none;">
-                                <label for="update-guid-kurikulum" class="form-label">Kurikulum</label>
-                                <select class="form-select" id="update-guid-kurikulum" name="update_guid_kurikulum">
-                                    @foreach ($kurikulums as $kurikulum)
-                                        <option value="{{ $kurikulum->guid }}">{{ $kurikulum->tahun_akademik }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="update-waktu-selesai" class="form-label">Waktu Selesai</label>
+                                <input type="datetime-local" class="form-control" id="update-waktu-selesai"
+                                    name="update_waktu_selesai" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -178,6 +136,29 @@
 @section('custom-javascript')
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#add-waktu-mulai').on('change', function() {
+                var startTime = new Date($(this).val());
+                var endTimeInput = $('#add-waktu-selesai');
+                var endTime = new Date(endTimeInput.val());
+
+                endTimeInput.prop('min', $(this).val());
+
+                if (endTime < startTime) {
+                    endTimeInput.val('');
+                }
+            });
+            $('#edit-waktu-mulai').on('change', function() {
+                var startTime = new Date($(this).val());
+                var endTimeInput = $('#edit-waktu-selesai');
+                var endTime = new Date(endTimeInput.val());
+
+                endTimeInput.prop('min', $(this).val());
+
+                if (endTime < startTime) {
+                    endTimeInput.val('');
+                }
+            });
+
             let data = ({!! json_encode($dataTable) !!});
             $('#table-data').DataTable({
                 "destroy": true,
@@ -191,45 +172,28 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'nrp',
+                        data: 'waktu_mulai',
                         className: 'text-center'
                     },
                     {
-                        data: 'name',
+                        data: 'waktu_selesai',
                         className: 'text-center'
-                    },
-                    {
-                        data: 'email',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'role',
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            return data['nama'];
-                        }
-                    },
-                    {
-                        data: 'kurikulum',
-                        className: 'text-center',
-                        render: function(data, type, row) {
-                            if (data) {
-                                return data['tahun_akademik'];
-                            } else {
-                                return "-";
-                            }
-                        }
                     },
                     {
                         data: null,
                         title: "Actions",
                         render: function(data, type, row) {
-                            return '<a role="button" class="edit-btn" style="text-decoration: none; margin-right: 10px;" data-nrp="' +
-                                data['nrp'] +
-                                '"><i class="fa-solid fa-pen" style="font-size: 15px; color: green;"></i></a>' +
-                                '<a role="button" class="delete-btn" style="text-decoration: none;" data-nrp="' +
-                                data['nrp'] +
-                                '"><i class="fa-solid fa-trash" style="font-size: 15px; color: red;"></i></a>';
+                            @if (Auth::user()->role->nama === 'program studi')
+                                return '<a role="button" class="edit-btn" style="text-decoration: none; margin-right: 10px;" data-guid="' +
+                                    data['guid'] +
+                                    '"><i class="fa-solid fa-pen" style="font-size: 15px; color: green;"></i></a>' +
+                                    '<a role="button" class="delete-btn" style="text-decoration: none;" data-guid="' +
+                                    data['guid'] +
+                                    '"><i class="fa-solid fa-trash" style="font-size: 15px; color: red;"></i></a>';
+                            @else
+                                return '<a href="/mata-kuliah/polling/' + data['guid'] +
+                                    '" role="button" style="text-decoration: none; margin-right: 10px;"><i class="fa-solid fa-circle-info" style="font-size: 15px; color: blue;"></i></a>'
+                            @endif
                         },
                         className: 'text-center',
                         "orderable": false,
@@ -260,7 +224,7 @@
                 displayLength: 10,
                 lengthMenu: [7, 10, 25, 50],
                 buttons: [{
-                    text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Kurikulum</span>',
+                    text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Polling</span>',
                     className: "create-new btn btn-primary",
                     action: function(e, dt, node, config) {
                         $('#modalAdd').modal('show');
@@ -284,82 +248,26 @@
                         }
                     }
                 },
-            }), $("div.head-label").html('<h5 class="card-title mb-0">Data Kurikulum</h5>');
+            }), $("div.head-label").html('<h5 class="card-title mb-0">Data Polling</h5>');
 
         });
 
         $(document).on("click", ".edit-btn", function() {
             var row = $(this).closest("tr");
-            var nrp = row.find("td:eq(1)").text().trim();
-            var nama = row.find("td:eq(2)").text().trim();
-            var email = row.find("td:eq(3)").text().trim();
-            var role_nama = row.find("td:eq(4)").text().trim();
-            var tahun_akademik = row.find("td:eq(5)").text().trim();
-            $('#update-nrp').val(nrp);
-            $('#update-nama').val(nama);
-            $('#update-email').val(email);
-            var roles = {!! json_encode($roles) !!};
-            roles.forEach(function(role) {
-                if (role.nama === role_nama) {
-                    $('#update-guid-role').val(role.guid);
-                }
-            });
-            var kurikulums = {!! json_encode($kurikulums) !!};
-            kurikulums.forEach(function(kurikulum) {
-                if (kurikulum.nama === tahun_akademik) {
-                    $('#update-guid-kurikulum').val(kurikulum.guid);
-                }
-            });
-            $('#modalUpdate').modal('show');
-            if (role_nama === 'mahasiswa') {
-                $('#update-kurikulum-div').show();
-            }
+            var waktu_mulai = row.find("td:eq(1)").text().trim();
+            var waktu_selesai = row.find("td:eq(2)").text().trim();
+            $('#update-waktu-mulai').val(waktu_mulai);
+            $('#update-waktu-selesai').val(waktu_selesai);
 
-            $('#update-form').attr('action', "/user/" + nrp);
+            $('#modalUpdate').modal('show');
+            var guid = $(this).data('guid');
+            $('#update-form').attr('action', "/polling/" + guid);
         });
 
         $(document).on("click", ".delete-btn", function() {
-            var nrp = $(this).data('nrp');
+            var guid = $(this).data('guid');
             $('#modalDelete').modal('show');
-            $('#delete-form').attr('action', "/user/" + nrp);
-        });
-
-        $('#add-guid-role').change(function() {
-            var selectedRole = $(this).val();
-            var kurikulumDiv = $('#add-kurikulum-div');
-            var kurikulumSelect = $('#add-guid-kurikulum');
-            var roles = {!! json_encode($roles) !!};
-
-            roles.forEach(function(role) {
-                if (role.guid === selectedRole) {
-                    if (role.nama === 'program studi') {
-                        kurikulumSelect.val('');
-                        kurikulumDiv.hide();
-                    } else {
-                        kurikulumDiv.show();
-                    }
-                }
-            });
-        });
-
-        $('#update-guid-role').change(function() {
-            var selectedRole = $(this).val();
-            var kurikulumDiv = $('#update-kurikulum-div');
-            var kurikulumSelect = $('#update-guid-kurikulum');
-            var roles = {!! json_encode($roles) !!};
-
-            roles.forEach(function(role) {
-                if (role.guid === selectedRole) {
-                    if (role.nama === 'program studi') {
-                        kurikulumSelect.val('');
-                        kurikulumDiv.hide();
-                    } else {
-                        kurikulumDiv.show();
-                    }
-                }
-            });
-
-
+            $('#delete-form').attr('action', "/polling/" + guid);
         });
     </script>
 @endsection

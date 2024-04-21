@@ -17,6 +17,7 @@ class CreateMataKuliahsTable extends Migration
             $table->char('kode', 6)->primary();
             $table->string('nama');
             $table->integer('sks');
+            $table->string('jadwal');
             $table->char('guid_kurikulum', 36);
             $table->foreign('guid_kurikulum')->references('guid')->on('kurikulums')->onDelete('cascade');
             $table->timestamps();

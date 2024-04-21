@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email' => '2172000@maranatha.ac.id',
             'password' => Hash::make('asd123'),
             'guid_role' => "e559bb14-fc78-11ee-85ed-509a4cce9dc0",
+            'tahun_masuk' => 2005,
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
             'email' => '2172040@maranatha.ac.id',
             'password' => Hash::make('asd123'),
             'guid_role' => "e559da1d-fc78-11ee-85ed-509a4cce9dc0",
-            'guid_kurikulum' => "0cb3c6e2-fc79-11ee-85ed-509a4cce9dc0",
+            'tahun_masuk' => 2021,
             'created_at' => now(),
             'updated_at' => now()
         ]);

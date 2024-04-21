@@ -30,6 +30,7 @@
                                 <th class="text-center">Kode</th>
                                 <th class="text-center">Nama</th>
                                 <th class="text-center">SKS</th>
+                                <th class="text-center">Jadwal</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -60,6 +61,10 @@
                             <div class="mb-3">
                                 <label for="add-sks" class="form-label">SKS</label>
                                 <input type="number" class="form-control" id="add-sks" name="add_sks" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="add-jadwal" class="form-label">Jadwal</label>
+                                <input type="text" class="form-control" id="add-jadwal" name="add_jadwal" required>
                             </div>
                             <div class="mb-3">
                                 <label for="add-guid-kurikulum" class="form-label">Kurikulum</label>
@@ -126,7 +131,11 @@
                                 <label for="update-sks" class="form-label">SKS</label>
                                 <input type="number" class="form-control" id="update-sks" name="update_sks" required>
                             </div>
-
+                            <div class="mb-3">
+                                <label for="update-jadwal" class="form-label">Jadwal</label>
+                                <input type="text" class="form-control" id="update-jadwal" name="update_jadwal"
+                                    required>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -178,6 +187,10 @@
                     },
                     {
                         data: 'sks',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'jadwal',
                         className: 'text-center'
                     },
                     {
@@ -253,9 +266,11 @@
             var kode = row.find("td:eq(1)").text().trim();
             var nama = row.find("td:eq(2)").text().trim();
             var sks = row.find("td:eq(3)").text().trim();
+            var jadwal = row.find("td:eq(4)").text().trim();
             $('#update-kode').val(kode);
             $('#update-nama').val(nama);
             $('#update-sks').val(sks);
+            $('#update-jadwal').val(jadwal);
             $('#modalUpdate').modal('show');
             $('#update-form').attr('action', "/mata-kuliah/" + kode);
         });

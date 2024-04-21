@@ -18,9 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_img')->nullable();
+            $table->integer('tahun_masuk');
             $table->char('guid_role', 36);
-            $table->char('guid_kurikulum', 36)->nullable();
-            $table->foreign('guid_kurikulum')->references('guid')->on('kurikulums')->onDelete('cascade');
             $table->foreign('guid_role')->references('guid')->on('roles')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();

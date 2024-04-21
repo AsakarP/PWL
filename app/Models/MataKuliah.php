@@ -14,7 +14,7 @@ class MataKuliah extends Model
 
 
     protected $fillable = [
-        'kode', 'nama', 'sks', 'guid_kurikulum'
+        'kode', 'nama', 'sks', 'jadwal', 'guid_kurikulum'
     ];
 
     protected $hidden = [
