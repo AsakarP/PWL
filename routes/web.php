@@ -1,35 +1,48 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// Route::get('/', function () {
+//     return view('login');
+// });
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    } else {
-        return view('auth.login');
-    }
+    return redirect(route('login'));
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('profile', [UserController::class, 'profile'])->name('profile');
-    Route::post('profile/edit-photo/{user:nrp}', [UserController::class, 'updatephoto'])->name('update-profile-photo');
-    Route::get('profile/delete-photo/{user:nrp}', [UserController::class, 'deletePhoto'])->name('delete-profile-photo');
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+// Route::get('/adminindex', function () {
+//     return view('admin.index');
+// });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::post('login', [AuthController::class, 'login'])->name('login');
+
+
+//  Admin
+Route::middleware(['auth', 'cekRole:1'])->group(function () {
+    Route::get('/admin', [UserController::class, 'index'])->name('admin-index');
+    Route::post('/admin/create', [UserController::class, 'store'])->name('admin-store');
+    Route::get('/admin/create', [UserController::class, 'create'])->name('admin-create');
+});
+
+// Prodi
+Route::middleware(['auth', 'cekRole:2'])->group(function () {
+});
+
+// Mahasiswa
+Route::middleware(['auth', 'cekRole:3'])->group(function () {
+
+});
+
+
+require __DIR__.'/auth.php';
