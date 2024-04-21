@@ -2,8 +2,6 @@
 
 @section('content')
     <div class="row">
-        {{-- <div class="col-md-2 d-none d-md-block bg-light"></div> --}}
-        <!-- Spacer untuk menyesuaikan isi -->
         <div class="col-md-10">
             <div class="container mt-3">
                 <h2>Welcome to Dashboard</h2>

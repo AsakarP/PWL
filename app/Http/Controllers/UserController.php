@@ -2,31 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kurikulum;
+use App\Models\Role;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class UserController extends Controller
 {
     public function profile()
     {
-        $session = new Session();
-        $nrp = $session->get('nrp');
-        $nama = $session->get('nama');
-        $email = $session->get('email');
-        $role = $session->get('role');
-        if ($session->get('kurikulum')) {
-            $kurikulum = $session->get('kurikulum');
-        } else {
-            $kurikulum = false;
-        }
-        if ($session->get('profile_img')) {
-            $profile_img = $session->get('profile_img');
-        } else {
-            $profile_img = false;
-        }
-        return view('profile.index', compact('nrp', 'nama', 'email', 'role', 'kurikulum', 'profile_img'));
+
+        return view('profile.index');
     }
     public function updatephoto(Request $request, User $user)
     {
@@ -54,7 +44,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::with('polling_details')->get();
+        $roles = Role::all();
+        $kurikulums = Kurikulum::all();
+        $dataTable = DataTables::of($user)
+            ->addIndexColumn()
+            ->make(true);
+        return view('user.index', compact('dataTable', 'roles', 'kurikulums'));
     }
 
     /**
@@ -70,7 +66,32 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validatedData = validator(
+                $request->all(),
+                [
+                    'add_nrp' => 'required|string',
+                    'add_nama' => 'required|string',
+                    'add_email' => 'required|email',
+                    'add_guid_role' => 'required|string',
+                    'add_guid_kurikulum' => 'nullable|string',
+                ]
+            )->validated();
+
+            $user = new User();
+            $user->nrp = $validatedData['add_nrp'];
+            $user->name = $validatedData['add_nama'];
+            $user->email = $validatedData['add_email'];
+            $user->guid_role = $validatedData['add_guid_role'];
+            $user->password = Hash::make('asd123');
+            if (isset($request['add_guid_kurikulum'])) {
+                $user->guid_kurikulum = $validatedData['add_guid_kurikulum'];
+            }
+            $user->save();
+            return redirect(route('user'));
+        } catch (Exception $ex) {
+            dd($ex);
+        }
     }
 
     /**
@@ -92,16 +113,42 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        try {
+            $validatedData = validator(
+                $request->all(),
+                [
+                    'update_nrp' => 'required|string',
+                    'update_nama' => 'required|string',
+                    'update_email' => 'required|email',
+                    'update_guid_role' => 'required|string',
+                    'update_guid_kurikulum' => 'nullable|string',
+                ]
+            )->validated();
+
+            $user->nrp = $validatedData['update_nrp'];
+            $user->name = $validatedData['update_nama'];
+            $user->email = $validatedData['update_email'];
+            $user->guid_role = $validatedData['update_guid_role'];
+            if (isset($request['update_guid_kurikulum'])) {
+                $user->guid_kurikulum = $validatedData['update_guid_kurikulum'];
+            } else {
+                $user->guid_kurikulum = null;
+            }
+            $user->save();
+            return redirect(route('user'));
+        } catch (Exception $ex) {
+            dd($ex);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user');
     }
 }

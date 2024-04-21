@@ -27,4 +27,12 @@ class Kurikulum extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    public function mata_kuliahs()
+    {
+        return $this->hasMany(MataKuliah::class, 'guid_kurikulum', 'guid');
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'guid_kurikulum', 'guid');
+    }
 }

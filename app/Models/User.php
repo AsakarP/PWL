@@ -41,8 +41,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Kurikulum::class, 'guid_kurikulum', 'guid');
     }
-    public function polling_detail()
+    public function polling_details()
     {
-        return $this->hasMany(PollingDetail::class);
+        return $this->hasMany(PollingDetail::class, 'nrp_user', 'nrp');
     }
 }

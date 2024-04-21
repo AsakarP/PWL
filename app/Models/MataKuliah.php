@@ -9,7 +9,7 @@ class MataKuliah extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'guid';
+    protected $primaryKey = 'kode';
     protected $keyType = 'string';
 
 
@@ -26,4 +26,8 @@ class MataKuliah extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+    public function kurikulum()
+    {
+        return $this->belongsTo(Kurikulum::class, 'guid_kurikulum', 'guid');
+    }
 }

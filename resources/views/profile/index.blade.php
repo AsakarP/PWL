@@ -17,7 +17,8 @@
                                         <i class="fa fa-user-circle" style="font-size: 150px;"></i>
                                     @endif
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                    <a href="{{ route('delete-profile-photo', ['user' => $nrp]) }}" class="btn btn-primary">
+                                    <a href="{{ route('delete-profile-photo', ['user' => Auth::user()->nrp]) }}"
+                                        class="btn btn-primary">
                                         Delete Image </a>
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#upload">Upload new image</button>
@@ -32,7 +33,7 @@
                                             <p class="mb-0">Full Name</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">{{ $nama }}</p>
+                                            <p class="text-muted mb-0">{{ Auth::user()->name }}</p>
                                         </div>
                                     </div>
                                     <hr>
@@ -41,7 +42,7 @@
                                             <p class="mb-0">Email</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">{{ $email }}</p>
+                                            <p class="text-muted mb-0">{{ Auth::user()->email }}</p>
                                         </div>
                                     </div>
                                     <hr>
@@ -51,17 +52,17 @@
                                         </div>
                                         <div class="col-sm-9">
                                             <p class="text-muted mb-0"><span
-                                                    class="badge bg-primary">{{ $role }}</span></p>
+                                                    class="badge bg-primary">{{ Auth::user()->role->nama }}</span></p>
                                         </div>
                                     </div>
-                                    @if ($kurikulum)
+                                    @if (isset(Auth::user()->kurikulum))
                                         <hr>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <p class="mb-0">Kurikulum</p>
                                             </div>
                                             <div class="col-sm-9">
-                                                <p class="text-muted mb-0">{{ $kurikulum }}</p>
+                                                <p class="text-muted mb-0">{{ Auth::user()->kurikulum }}</p>
                                             </div>
                                         </div>
                                     @endif
@@ -81,8 +82,8 @@
                         <h5 class="modal-title">Upload Profile Photo</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form enctype="multipart/form-data" action="{{ route('update-profile-photo', ['user' => $nrp]) }}"
-                        method="post">
+                    <form enctype="multipart/form-data"
+                        action="{{ route('update-profile-photo', ['user' => Auth::user()->nrp]) }}" method="post">
                         @csrf
                         <div class="modal-body">
 

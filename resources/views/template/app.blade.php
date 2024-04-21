@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    @yield('vendor-css')
     @yield('custom-css')
 </head>
 
@@ -33,6 +34,21 @@
                             <a href="{{ route('profile') }}" class="nav-link px-0 align-middle">
                                 <i class="fas fa-clipboard-list"></i> <span
                                     class="ms-1 d-none d-sm-inline">Profile</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ route('kurikulum') }}" class="nav-link px-0 align-middle">
+                                <i class="fas fa-clipboard-list"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Kurikulum</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile') }}" class="nav-link px-0 align-middle">
+                                <i class="fas fa-clipboard-list"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Polling</span></a>
+                        </li>
+                        <li>
+                            <a href="{{ route('user') }}" class="nav-link px-0 align-middle">
+                                <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
+                            </a>
                         </li>
                         <li>
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
@@ -88,22 +104,21 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <i class="fas fa-users"></i> <span class="ms-1 d-none d-sm-inline">Customers</span>
-                            </a>
-                        </li>
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
                         <a href="#"
                             class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
-                                class="rounded-circle img-fluid">
+                            @if (Auth::user()->profile_img)
+                                <img src="{{ asset('storage/' . Auth::user()->profile_img) }}" alt="hugenerd"
+                                    width="30" height="30" class="rounded-circle img-fluid">
+                            @else
+                                <i class="fa fa-user-circle" style="font-size: 30px;"></i>
+                            @endif
                             <div class="d-flex flex-column ms-2">
-                                <span class="d-inline-block">{{ $nama }}</span>
-                                <span class="badge bg-primary">{{ $role }}</span>
+                                <span class="d-inline-block">{{ Auth::user()->name }}</span>
+                                <span class="badge bg-primary">{{ Auth::user()->role->nama }}</span>
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -126,9 +141,15 @@
                                 <li class="breadcrumb-item">
                                     Pages
                                 </li>
-                                <li class="breadcrumb-item">
-                                    {{ str_replace('-', ' ', Request::path()) }}
-                                </li>
+                                @if (View::hasSection('breadcrumb'))
+                                    <li class="breadcrumb-item">
+                                        @yield('breadcrumb')
+                                    </li>
+                                @else
+                                    <li class="breadcrumb-item">
+                                        {{ str_replace('-', ' ', Request::path()) }}
+                                    </li>
+                                @endif
                             </ol>
                         </nav>
                     </div>
@@ -142,7 +163,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript"></script>
+    @yield('vendor-javascript')
     @yield('custom-javascript')
 
 </body>

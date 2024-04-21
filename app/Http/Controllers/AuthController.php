@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthController extends Controller
 {
@@ -16,30 +15,15 @@ class AuthController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            $session = new Session();
-            $session->set('nama', Auth::user()->name);
-            $session->set('nrp', Auth::user()->nrp);
-            $session->set('email', Auth::user()->email);
-            if (isset(Auth::user()->profile_img)) {
-                $session->set('profile_img', Auth::user()->profile_img);
-            }
-            $session->set('profile_img', Auth::user()->profile_img);
-            $session->set('role', Auth::user()->role->nama);
-            if (isset(Auth::user()->kurikulum)) {
-                $session->set('kurikulum', Auth::user()->kurikulum->tahun_akademik);
-            }
-
             return redirect()->route('dashboard');
         } else {
-            return back()->withErrors(['login' => 'Email atau password salah.'])->withInput();
+            return redirect('/')->withErrors(['email' => 'Email atau password salah.']);
         }
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        $session = new Session();
-        $session->clear();
         return redirect('/');
     }
 }
