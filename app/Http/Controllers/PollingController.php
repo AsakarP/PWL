@@ -38,7 +38,7 @@ class PollingController extends Controller
             $validatedData = validator(
                 $request->all(),
                 [
-                    'add_waktu_mulai' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . date(DATE_ATOM),
+                    'add_waktu_mulai' => 'required|date_format:Y-m-d\TH:i',
                     'add_waktu_selesai' => 'required|date_format:Y-m-d\TH:i|after:' . $request['add_waktu_mulai'],
                 ]
             )->validated();
@@ -78,7 +78,7 @@ class PollingController extends Controller
             $validatedData = validator(
                 $request->all(),
                 [
-                    'update_waktu_mulai' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . date(DATE_ATOM),
+                    'update_waktu_mulai' => 'required|date_format:Y-m-d\TH:i',
                     'update_waktu_selesai' => 'required|date_format:Y-m-d\TH:i|after:' . $request['update_waktu_mulai'],
                 ]
             )->validated();

@@ -1,17 +1,6 @@
 @extends('template.app')
 
 @section('content')
-    @if (session('success'))
-        <script>
-            alert("{{ session('success') }}");
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            alert("{{ session('error') }}");
-        </script>
-    @endif
     <div class="content">
         <div class="container-fluid">
             <section style="background-color: #eee;">
@@ -155,6 +144,17 @@
         </div>
 
     </div>
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
 @endsection
 @section('custom-javascript')
     <script>
