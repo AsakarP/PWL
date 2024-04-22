@@ -12,6 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
+
         $users = User::orderBy('created_at', "DESC")->get();
 
         return view('admin.index',compact('users'));
@@ -33,7 +34,7 @@ class UserController extends Controller
 
         User::create($request->all());
 
-        return redirect()->route('admin-index')->with('success','Role Berhasil Ditambahkan');
+        return redirect()->route('admin-index')->with('success','User Berhasil Ditambahkan');
 
     }
 
@@ -48,9 +49,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+        return view('admin.edit' , compact('user'));
     }
 
     /**
@@ -58,7 +61,13 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+    
+       
+        $user->update($request->all());
+
+        
+        return redirect()->route('admin-index')->with('success','User Berhasil Diupdate');
     }
 
     /**
@@ -66,6 +75,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->route('admin-index')->with('success','User Berhasil Dihapus');
     }
 }

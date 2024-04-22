@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data Role User</h1>
+                        <h1 class="m-0">Data User</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Roles</li>
+                            <li class="breadcrumb-item active">Users</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -26,12 +26,12 @@
                 <div class="card p-4">
                     @if(\Illuminate\Support\Facades\Session::has('success'))
                         <div class="alert alert-success" role="alert">
-                            Role Berhasil Ditambahkan!
+                            {{ Session::get('success') }}
                         </div>
                     @endif
 
                     <div class="card-header">
-                        <a href="{{ route('admin-create') }}" role="button" class="btn btn-success">Tambah Role</a>
+                        <a href="{{ route('admin-create') }}" role="button" class="btn btn-success">Tambah User</a>
                         {{-- <a href="{{ route('admin-index') }}" role="button" class="btn btn-success">Tambah Role</a> --}}
                     </div>
                     <div class="card-body">
@@ -65,8 +65,8 @@
                             <td>{{ $user->email}}</td>
                             <td>{{ $user->kode_role }}</td>
                             <td>
-                                <a href="/" class="btn btn-warning" role="button"><i class="fas fa-edit"></i></a>
-                                <a href="/" class="btn btn-danger del-button" role="button"><i class="fas fa-trash"></i></a>
+                                <a href="{{ route('admin-edit', $user->id) }}" class="btn btn-warning" role="button"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin-delete', $user->id) }}" class="btn btn-danger del-button" role="button"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach

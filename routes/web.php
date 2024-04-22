@@ -33,6 +33,10 @@ Route::middleware(['auth', 'cekRole:1'])->group(function () {
     Route::get('/admin', [UserController::class, 'index'])->name('admin-index');
     Route::post('/admin/create', [UserController::class, 'store'])->name('admin-store');
     Route::get('/admin/create', [UserController::class, 'create'])->name('admin-create');
+    Route::patch('/admin/edit/{id}', [UserController::class, 'update'])->name('admin-update');
+    Route::get('/admin/edit/{id}', [UserController::class, 'edit'])->name('admin-edit');
+    Route::get('/admin/delete/{id}', [UserController::class, 'destroy'])->name('admin-delete');
+
 });
 
 // Prodi
