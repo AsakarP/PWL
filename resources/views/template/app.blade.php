@@ -32,8 +32,7 @@
                         </li>
                         <li>
                             <a href="{{ route('profile') }}" class="nav-link px-0 align-middle">
-                                <i class="fas fa-clipboard-list"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Profile</span></a>
+                                <i class="fas fa-user"></i> <span class="ms-1 d-none d-sm-inline">Profile</span></a>
                         </li>
                         @if (Auth::user()->role->nama === 'program studi')
                             <li>
@@ -49,29 +48,9 @@
                         @endif
                         <li>
                             <a href="{{ route('polling') }}" class="nav-link px-0 align-middle">
-                                <i class="fas fa-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Polling</span>
+                                <i class="fas fa-poll"></i> <span class="ms-1 d-none d-sm-inline">Polling</span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fas fa-chart-line"></i> <span class="ms-1 d-none d-sm-inline">Polling</span>
-                            </a>
-                            <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="{{ route('polling') }}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Index</span></a>
-                                </li>
-                                <li class="w-100">
-                                    <a href="{{ route('mata-kuliah-polling') }}" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Index</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Result</span></a>
-                                </li>
-                            </ul>
-                        </li> --}}
-
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
@@ -79,10 +58,10 @@
                             class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             @if (Auth::user()->profile_img)
-                                <img src="{{ asset('storage/' . Auth::user()->profile_img) }}" alt="hugenerd"
+                                <img src="{{ asset('storage/' . Auth::user()->profile_img) }}" alt="Profile Image"
                                     width="30" height="30" class="rounded-circle img-fluid">
                             @else
-                                <i class="fa fa-user-circle" style="font-size: 30px;"></i>
+                                <i class="fas fa-user-circle me-2" style="font-size: 30px;"></i>
                             @endif
                             <div class="d-flex flex-column ms-2">
                                 <span class="d-inline-block">{{ Auth::user()->name }}</span>
@@ -90,12 +69,6 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Sign out</a></li>
                         </ul>
                     </div>

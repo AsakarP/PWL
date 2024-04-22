@@ -184,7 +184,9 @@
                         title: "Actions",
                         render: function(data, type, row) {
                             @if (Auth::user()->role->nama === 'program studi')
-                                return '<a role="button" class="edit-btn" style="text-decoration: none; margin-right: 10px;" data-guid="' +
+                                return '<a href="/user/polling/' + data['guid'] +
+                                    '" role="button" style="text-decoration: none; margin-right: 10px;"><i class="fa-solid fa-circle-info" style="font-size: 15px; color: blue;"></i></a>' +
+                                    '<a role="button" class="edit-btn" style="text-decoration: none; margin-right: 10px;" data-guid="' +
                                     data['guid'] +
                                     '"><i class="fa-solid fa-pen" style="font-size: 15px; color: green;"></i></a>' +
                                     '<a role="button" class="delete-btn" style="text-decoration: none;" data-guid="' +

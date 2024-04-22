@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Kurikulum;
 use App\Models\MataKuliah;
-use App\Models\Polling;
-use App\Models\PollingDetail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 
 class MataKuliahController extends Controller
 {
@@ -34,27 +31,6 @@ class MataKuliahController extends Controller
         $tahunAkademik = $kurikulum->tahun_akademik;
         $guid = $kurikulum->guid;
         return view('mata_kuliah.index', compact('dataTable', 'tahunAkademik', 'guid'));
-    }
-
-    public function indexPolling(Polling $polling)
-    {
-
-        $polling_detail = PollingDetail::where('nrp_user', '=', Auth::user()->nrp)->where('guid_polling', '=', $polling->guid)->count();
-
-        if ($polling_detail > 0) {
-            $mata_kuliah = PollingDetail::with('mata_kuliah')->where('nrp_user', '=', Auth::user()->nrp)->where('guid_polling', '=', $polling->guid)->get();
-            $dataTable = DataTables::of($mata_kuliah)
-                ->addIndexColumn()
-                ->make(true);
-            return view('polling.result', compact('dataTable'));
-        } else {
-            $kurikulum = Kurikulum::where('status', '=', 'active')->first();
-            $mata_kuliah = MataKuliah::where('guid_kurikulum', '=', $kurikulum->guid)->get();
-            $dataTable = DataTables::of($mata_kuliah)
-                ->addIndexColumn()
-                ->make(true);
-            return view('polling.input', compact('dataTable', 'polling', 'kurikulum'));
-        }
     }
 
     /**

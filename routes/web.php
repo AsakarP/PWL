@@ -41,7 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user/{user:nrp}', [UserController::class, 'update'])->name('user-update');
     Route::get('user/{user}', [UserController::class, 'destroy'])->name('user-delete');
 
-    Route::get('mata-kuliah/polling/{polling}', [MataKuliahController::class, 'indexPolling'])->name('mata-kuliah-polling');
+    Route::get('mata-kuliah/polling/{polling}', [PollingDetailController::class, 'indexPolling'])->name('mata-kuliah-polling');
+    Route::get('mata-kuliah/polling/result/{polling}/{user}', [PollingDetailController::class, 'mataKuliahResultPolling'])->name('mata-kuliah-polling-result');
+    Route::get('user/polling/{polling}', [PollingDetailController::class, 'indexResultPolling'])->name('result-polling');
     Route::get('polling-detail', [PollingDetailController::class, 'index'])->name('polling-detail');
     Route::post('polling-detail', [PollingDetailController::class, 'store'])->name('polling-detail-store');
     Route::post('polling-detail/{polling-detail}', [PollingDetailController::class, 'update'])->name('polling-detail-update');
