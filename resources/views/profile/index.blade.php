@@ -1,6 +1,17 @@
 @extends('template.app')
 
 @section('content')
+    @if (session('success'))
+        <script>
+            alert("{{ session('success') }}");
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            alert("{{ session('error') }}");
+        </script>
+    @endif
     <div class="content">
         <div class="container-fluid">
             <section style="background-color: #eee;">
@@ -22,7 +33,12 @@
                                         Delete Image </a>
                                     <button class="btn btn-primary" type="button" data-bs-toggle="modal"
                                         data-bs-target="#upload">Upload new image</button>
+                                    <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal"
+                                        data-bs-target="#changePasswordModal">
+                                        Ubah Password
+                                    </button>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-lg-8">
@@ -101,7 +117,45 @@
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah Password</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('change-password') }}" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Password Saat Ini</label>
+                                <input type="password" class="form-control" id="currentPassword" name="currentPassword"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">Password Baru</label>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmPassword" class="form-label">Konfirmasi Password Baru</label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Ubah Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
+@endsection
 @section('custom-javascript')
     <script>
         function previewImage() {
@@ -123,5 +177,4 @@
             }
         }
     </script>
-@endsection
 @endsection

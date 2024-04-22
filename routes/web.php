@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
     Route::post('profile/edit-photo/{user:nrp}', [UserController::class, 'updatephoto'])->name('update-profile-photo');
     Route::get('profile/delete-photo/{user:nrp}', [UserController::class, 'deletePhoto'])->name('delete-profile-photo');
+    Route::post('profile/change-password', [UserController::class, 'changePassword'])->name('change-password');
 
     Route::get('user', [UserController::class, 'index'])->name('user');
     Route::post('user', [UserController::class, 'store'])->name('user-store');

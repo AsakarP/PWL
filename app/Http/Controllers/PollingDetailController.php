@@ -8,6 +8,7 @@ use App\Models\Polling;
 use App\Models\PollingDetail;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,14 +63,18 @@ class PollingDetailController extends Controller
     public function indexPolling(Polling $polling)
     {
 
+        $currentTime = Carbon::now('Asia/Jakarta');
+
         $polling_detail = PollingDetail::where('nrp_user', '=', Auth::user()->nrp)->where('guid_polling', '=', $polling->guid)->count();
 
-        if ($polling_detail > 0) {
+        if ($polling_detail > 0 || $currentTime > $polling->waktu_selesai) {
             $mata_kuliah = PollingDetail::with('mata_kuliah')->where('nrp_user', '=', Auth::user()->nrp)->where('guid_polling', '=', $polling->guid)->get();
             $dataTable = DataTables::of($mata_kuliah)
                 ->addIndexColumn()
                 ->make(true);
             return view('polling.result', compact('dataTable'));
+        } else if ($currentTime < $polling->waktu_mulai) {
+            abort(403, 'Polling Belum Dimulai.');
         } else {
             $kurikulum = Kurikulum::where('status', '=', 'active')->first();
             $mata_kuliah = MataKuliah::where('guid_kurikulum', '=', $kurikulum->guid)->get();

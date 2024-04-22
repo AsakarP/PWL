@@ -225,13 +225,17 @@
                 dom: '<"card-header flex-column flex-md-row"<"head-label text-center"><"dt-action-buttons text-end pt-3 pt-md-0"B>><"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>>t<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                 displayLength: 10,
                 lengthMenu: [7, 10, 25, 50],
-                buttons: [{
-                    text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Polling</span>',
-                    className: "create-new btn btn-primary",
-                    action: function(e, dt, node, config) {
-                        $('#modalAdd').modal('show');
-                    }
-                }],
+                buttons: [
+                    @if (Auth::user()->role->nama === 'program studi')
+                        {
+                            text: '<i class="ti ti-plus me-sm-1"></i> <span class="d-none d-sm-inline-block">Add Polling</span>',
+                            className: "create-new btn btn-primary",
+                            action: function(e, dt, node, config) {
+                                $('#modalAdd').modal('show');
+                            }
+                        }
+                    @endif
+                ],
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({

@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -136,6 +137,31 @@ class UserController extends Controller
             dd($ex);
         }
     }
+
+
+    public function changePassword(Request $request)
+    {
+        $user = $user = User::find(Auth::user()->nrp);
+        try {
+            $request->validate([
+                'currentPassword' => 'required',
+                'newPassword' => 'required|different:currentPassword',
+                'confirmPassword' => 'required|same:newPassword',
+            ]);
+
+            if (!Hash::check($request->currentPassword, $user->password)) {
+                return redirect()->back()->with('error', 'Password saat ini salah.');
+            }
+
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+
+            return redirect()->back()->with('success', 'Password berhasil diubah.');
+        } catch (Exception $ex) {
+            dd($ex);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.
