@@ -45,10 +45,30 @@
                 <li class="nav-item">
                     {{-- <a href="{{ route('kk-list') }}" class="nav-link"> --}}
                         
-                    <a href="/" class="nav-link">
+                    <a href="{{ route('mk-index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Matakuliah
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {{-- <a href="{{ route('kk-list') }}" class="nav-link"> --}}
+                        
+                    <a href="{{ route('poll-index') }}" class="nav-link">
                         <i class="nav-icon fas fa-building"></i>
                         <p>
                             Polling
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {{-- <a href="{{ route('kk-list') }}" class="nav-link"> --}}
+                        
+                    <a href="{{ route('poll-index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-building"></i>
+                        <p>
+                            Hasil
                         </p>
                     </a>
                 </li>

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\MataKuliahController;
+use App\Http\Controllers\PollingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Matakuliah;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -36,11 +39,26 @@ Route::middleware(['auth', 'cekRole:1'])->group(function () {
     Route::patch('/admin/edit/{id}', [UserController::class, 'update'])->name('admin-update');
     Route::get('/admin/edit/{id}', [UserController::class, 'edit'])->name('admin-edit');
     Route::get('/admin/delete/{id}', [UserController::class, 'destroy'])->name('admin-delete');
-
 });
 
 // Prodi
 Route::middleware(['auth', 'cekRole:2'])->group(function () {
+
+    // MataKuliah
+    Route::get('/prodi/matakuliah', [MatakuliahController::class, 'index'])->name('mk-index');
+    Route::post('/prodi/matakuliah/create', [MatakuliahController::class, 'store'])->name('mk-store');
+    Route::get('/prodi/matakuliah/create', [MatakuliahController::class, 'create'])->name('mk-create');
+    Route::patch('/prodi/edit/{id}', [MatakuliahController::class, 'update'])->name('mk-update');
+    Route::get('/prodi/edit/{id}', [MatakuliahController::class, 'edit'])->name('mk-edit');
+    Route::get('/prodi/delete/{id}', [MatakuliahController::class, 'destroy'])->name('mk-delete');
+
+    // Polling
+    Route::get('/prodi/polling', [PollingController::class, 'index'])->name('poll-index');
+    Route::post('/prodi/polling/create', [PollingController::class, 'store'])->name('poll-store');
+    Route::get('/prodi/polling/create', [PollingController::class, 'create'])->name('poll-create');
+    Route::patch('/prodi/polling/edit/{id}', [PollingController::class, 'update'])->name('poll-update');
+    Route::get('/prodi/polling/edit/{id}', [PollingController::class, 'edit'])->name('poll-edit');
+    Route::get('/prodi/polling/delete/{id}', [PollingController::class, 'destroy'])->name('poll-delete');
 });
 
 // Mahasiswa
