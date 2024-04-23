@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Matakuliah;
-use App\Models\Polling;
 use Illuminate\Http\Request;
+use App\Models\Polling;
+use Illuminate\Support\Facades\View;
 
-class PollingController extends Controller
+class PollingDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,13 @@ class PollingController extends Controller
     public function index()
     {
         $polls = Polling::orderBy('created_at', "DESC")->get();
-        return view('prodi.polling.index',compact('polls'));
+        return view('mahasiswa.index',compact('polls'));
+    }
+
+    public function indexmk()
+    {
+        $mks = Matakuliah::orderBy('created_at', "DESC")->get();
+        return view('mahasiswa.indexmk',compact('mks'));
     }
 
     /**
@@ -22,7 +29,7 @@ class PollingController extends Controller
      */
     public function create()
     {
-        return view('prodi.polling.create');
+        //
     }
 
     /**
@@ -30,9 +37,7 @@ class PollingController extends Controller
      */
     public function store(Request $request)
     {
-        Polling::create($request->all());
-
-        return redirect()->route('poll-index')->with('success','Polling Berhasil Ditambahkan');
+        //
     }
 
     /**
@@ -48,9 +53,7 @@ class PollingController extends Controller
      */
     public function edit(string $id)
     {
-        $poll = Polling::findOrFail($id);
-        
-        return view('prodi.polling.edit' , compact('poll'));
+        //
     }
 
     /**
@@ -58,13 +61,7 @@ class PollingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $poll = Polling::findOrFail($id);
-        // $mk = Matakuliah::
-       
-        $poll->update($request->all());
-
-        
-        return redirect()->route('poll-index')->with('success','Polling Berhasil Diupdate');
+        //
     }
 
     /**
@@ -72,10 +69,6 @@ class PollingController extends Controller
      */
     public function destroy(string $id)
     {
-        $poll = Polling::findOrFail($id);
-
-        $poll->delete();
-
-        return redirect()->route('poll-index')->with('success','Polling Berhasil Dihapus');
+        //
     }
 }

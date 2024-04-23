@@ -20,8 +20,8 @@ class User extends Authenticatable
         'nrp',
         'name',
         'email',
-        'kode_role',
         'password',
+        'kode_role'
     ];
 
     /**

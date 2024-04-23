@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\MataKuliahController;
 use App\Http\Controllers\PollingController;
+use App\Http\Controllers\PollingDetailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Matakuliah;
+use App\Models\PollingDetail;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -63,7 +65,8 @@ Route::middleware(['auth', 'cekRole:2'])->group(function () {
 
 // Mahasiswa
 Route::middleware(['auth', 'cekRole:3'])->group(function () {
-
+    Route::get('/mahasiswa', [PollingDetailController::class, 'index'])->name('mahasiswa-index');
+    Route::get('/mahasiswa/mk', [PollingDetailController::class, 'indexmk'])->name('mahasiswa-indexmk');
 });
 
 

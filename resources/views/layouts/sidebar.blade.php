@@ -65,7 +65,7 @@
                 <li class="nav-item">
                     {{-- <a href="{{ route('kk-list') }}" class="nav-link"> --}}
                         
-                    <a href="{{ route('poll-index') }}" class="nav-link">
+                    <a href="{{ route('dashboard') }}" class="nav-link">
                         <i class="nav-icon fas fa-building"></i>
                         <p>
                             Hasil
@@ -76,7 +76,7 @@
                 @if(Auth::user()->kode_role == 3)
                     <li class="nav-item">
                         {{-- <a href="{{ route('ctz-list') }}" class="nav-link"> --}}
-                        <a href="/" class="nav-link">
+                        <a href="{{ route('mahasiswa-index') }}" class="nav-link">
                             <i class="nav-icon far fa-id-card"></i>
                             <p>
                                 Voting
